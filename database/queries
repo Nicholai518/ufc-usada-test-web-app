@@ -15,3 +15,8 @@ CREATE TABLE usada_test_counts (
     primary key (id),
     foreign key (fighter_id) references ufc_fighters (id)
 );
+----------------------------------------------------------------------------------------
+
+Manually added fighters
+
+

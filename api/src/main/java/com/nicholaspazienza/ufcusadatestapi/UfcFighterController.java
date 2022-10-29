@@ -1,32 +1,52 @@
 package com.nicholaspazienza.ufcusadatestapi;
 
-import com.nicholaspazienza.ufcusadatestapi.model.Fighter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.nicholaspazienza.ufcusadatestapi.entities.Fighter;
+import com.nicholaspazienza.ufcusadatestapi.repository.FighterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("fighters")
+@RequestMapping("/fighter")
 public class UfcFighterController {
-    // fields
-    Map<Integer, Fighter> database = new HashMap<>() {{
-        put(1, new Fighter(1, "Joe", "Fighterguy"));
-        put(2, new Fighter(2, "Kevin", "Kickerguy"));
-        put(3, new Fighter(3, "Nick", "Boxerguy"));
-    }};
 
-    @GetMapping("/by-year/{year}")
-    public Collection<Fighter> getFighters() {
-        return database.values();
+    @Autowired
+    FighterRepository fighterRepository;
+
+    @GetMapping("/")
+    public List<Fighter> index() {
+        return fighterRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Fighter getFighter(@PathVariable("id") Integer id) {
-        return database.get(id);
+    public Fighter show(@PathVariable String id) {
+        int fighterId = Integer.parseInt(id);
+        return fighterRepository.findById(fighterId).get();
+    }
+
+    @PostMapping("/")
+    public Fighter create(@RequestBody Map<String, String> body) {
+        String firstname = body.get("firstname");
+        String lastname = body.get("lastname");
+        return fighterRepository.save(new Fighter(firstname, lastname));
+    }
+
+    @PutMapping("/{id}")
+    public Fighter update(@PathVariable String id, @RequestBody Map<String, String> body) {
+        int fighterId = Integer.parseInt(id);
+        // getting fighter
+        Fighter fighter = fighterRepository.findById(fighterId).get();
+        fighter.setFirstname(body.get("firstname"));
+        fighter.setLastname(body.get("lastname"));
+        return fighterRepository.save(fighter);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable String id) {
+        int fighterId = Integer.parseInt(id);
+        fighterRepository.delete(fighterRepository.findById(fighterId).get());
+        return true;
     }
 }
