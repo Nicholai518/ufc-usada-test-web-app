@@ -1,0 +1,17 @@
+// Create tables
+
+CREATE TABLE ufc_fighters (
+    id int not null,
+    first_name varchar(255),
+    last_name varchar(255),
+    primary key (id)
+);
+
+CREATE TABLE usada_test_counts (
+    id int not null,
+    year int not null,
+    total int not null,
+    fighter_id int not null,
+    primary key (id),
+    foreign key (fighter_id) references ufc_fighters (id)
+);
