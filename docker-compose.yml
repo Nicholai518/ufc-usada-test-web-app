@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  database:
+    image: mysql:8.0
+    restart: always
+    environment:
+      # The default database name we want
+      MYSQL_DATABASE: 'ufc-usada-database'
+      # The name of the "root" user
+      MYSQL_USER: 'user'
+      # Generic password for easy access during development
+      MYSQL_PASSWORD: 'password'
+      # Use the same generic password for root access as the root user
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - database:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  database:
+    driver: local
