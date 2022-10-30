@@ -26,6 +26,12 @@ public class UsadaTestCountController {
         return usadaTestCountRepository.findById(usadaTestCountId).get();
     }
 
+    @GetMapping("/year/{year}")
+    public List<UsadaTestCount> showForYear(@PathVariable String year) {
+        int usadaTestCountYear = Integer.parseInt(year);
+        return usadaTestCountRepository.findByYear(usadaTestCountYear);
+    }
+
     @PostMapping("/")
     public UsadaTestCount create(@RequestBody Map<String, String> body) {
         int year = Integer.parseInt(body.get("year"));
