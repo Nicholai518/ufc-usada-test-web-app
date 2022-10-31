@@ -1,6 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Form from 'react-bootstrap/Form'
+import Table from 'react-bootstrap/Table'
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -25,6 +27,34 @@ export default function Home() {
           <option value="2015">2015</option>
           <option value="All">All</option>
         </Form.Select>
+
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Test Count</th>
+              <th>Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Jon Jones</td>
+              <td>13</td>
+              <td>3.2%</td>
+            </tr>
+            <tr>
+              <td>Clay Guida</td>
+              <td>4</td>
+              <td>1%</td>
+            </tr>
+            <tr>
+              <td>Jose Aldo</td>
+              <td>3</td>
+              <td>1%</td>
+            </tr>
+          </tbody>
+        </Table>
+
       </main>
 
 
